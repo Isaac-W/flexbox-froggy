@@ -335,6 +335,9 @@ var messages = {
     'yo': 'Flexbox Froggy - Eré tí ẹ̀yàń lè fi kọ́ ẹ̀kọ́ flexbox CSS',
     'no': 'Flexbox Froggy - Et spill for å lære CSS flexbox'
   },
+  labelExport: {
+    'en': 'Export Progress'
+  },
   labelReset: {
     'en': 'Reset',
     'af': 'Herstel',
