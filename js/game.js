@@ -562,7 +562,7 @@ var game = {
     localStorage.setItem('solved', JSON.stringify(game.solved));
 
     var solved = game.solved || [];
-    var levelsExport = [];
+    var levelsExport = {};
     var completedCount = 0;
 
     levels.forEach(function(lvl, i) {
@@ -575,7 +575,6 @@ var game = {
 
       var levelEntry = {
         level: i + 1,
-        name: levelName,
         completed: isCompleted
       };
 
@@ -583,7 +582,7 @@ var game = {
         levelEntry.verification = game.generateVerificationHash(levelName);
       }
 
-      levelsExport.push(levelEntry);
+      levelsExport[levelName] = levelEntry;
     });
 
     var exportData = {
