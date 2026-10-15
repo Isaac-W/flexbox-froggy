@@ -1,11 +1,11 @@
 var game = {
-  colorblind: (localStorage.colorblind && JSON.parse(localStorage.colorblind)) || 'false',
+  colorblind: (localStorage['flexbox_froggy_colorblind'] && JSON.parse(localStorage['flexbox_froggy_colorblind'])) || 'false',
   language: window.location.hash.substring(1) || 'en',
   difficulty: 'easy',
-  level: parseInt(localStorage.level, 10) || 0,
-  answers: (localStorage.answers && JSON.parse(localStorage.answers)) || {},
-  solved: (localStorage.solved && JSON.parse(localStorage.solved)) || [],
-  verifications: (localStorage.verifications && JSON.parse(localStorage.verifications)) || {},
+  level: parseInt(localStorage['flexbox_froggy_level'], 10) || 0,
+  answers: (localStorage['flexbox_froggy_answers'] && JSON.parse(localStorage['flexbox_froggy_answers'])) || {},
+  solved: (localStorage['flexbox_froggy_solved'] && JSON.parse(localStorage['flexbox_froggy_solved'])) || [],
+  verifications: (localStorage['flexbox_froggy_verifications'] && JSON.parse(localStorage['flexbox_froggy_verifications'])) || {},
   changed: false,
   clickedCode: null,
 
@@ -105,8 +105,8 @@ var game = {
         game.answers = {};
         game.solved = [];
         game.verifications = {};
-        localStorage.setItem('solved', JSON.stringify(game.solved));
-        localStorage.setItem('verifications', JSON.stringify(game.verifications));
+        localStorage.setItem('flexbox_froggy_solved', JSON.stringify(game.solved));
+        localStorage.setItem('flexbox_froggy_verifications', JSON.stringify(game.verifications));
         game.loadLevel(levels[0]);
 
         $('.level-marker').removeClass('solved');
@@ -177,11 +177,11 @@ var game = {
 
     $(window).on('beforeunload', function() {
       game.saveAnswer();
-      localStorage.setItem('level', game.level);
-      localStorage.setItem('answers', JSON.stringify(game.answers));
-      localStorage.setItem('solved', JSON.stringify(game.solved));
-      localStorage.setItem('verifications', JSON.stringify(game.verifications));
-      localStorage.setItem('colorblind', JSON.stringify(game.colorblind));
+      localStorage.setItem('flexbox_froggy_level', game.level);
+      localStorage.setItem('flexbox_froggy_answers', JSON.stringify(game.answers));
+      localStorage.setItem('flexbox_froggy_solved', JSON.stringify(game.solved));
+      localStorage.setItem('flexbox_froggy_verifications', JSON.stringify(game.verifications));
+      localStorage.setItem('flexbox_froggy_colorblind', JSON.stringify(game.colorblind));
     }).on('hashchange', function() {
       game.language = window.location.hash.substring(1) || 'en';
       game.translate();
@@ -438,7 +438,7 @@ var game = {
 
     if (correct) {
       game.recordSolved(level.name);
-      localStorage.setItem('level', game.level);
+      localStorage.setItem('flexbox_froggy_level', game.level);
 
       $('[data-level=' + game.level + ']').addClass('solved');
       $('#next').removeClass('disabled').addClass('animated animation');
@@ -451,7 +451,7 @@ var game = {
   saveAnswer: function() {
     var level = levels[this.level];
     game.answers[level.name] = $('#code').val();
-    localStorage.setItem('answers', JSON.stringify(game.answers));
+    localStorage.setItem('flexbox_froggy_answers', JSON.stringify(game.answers));
   },
 
   tryagain: function() {
@@ -557,8 +557,8 @@ var game = {
     if ($.inArray(name, game.solved) === -1) {
       game.solved.push(name);
     }
-    localStorage.setItem('solved', JSON.stringify(game.solved));
-    localStorage.setItem('verifications', JSON.stringify(game.verifications));
+    localStorage.setItem('flexbox_froggy_solved', JSON.stringify(game.solved));
+    localStorage.setItem('flexbox_froggy_verifications', JSON.stringify(game.verifications));
   },
 
   // Drops any solved level whose stored verification code is missing or wrong
@@ -569,8 +569,8 @@ var game = {
         delete game.verifications[name];
       }
     });
-    localStorage.setItem('solved', JSON.stringify(game.solved));
-    localStorage.setItem('verifications', JSON.stringify(game.verifications));
+    localStorage.setItem('flexbox_froggy_solved', JSON.stringify(game.solved));
+    localStorage.setItem('flexbox_froggy_verifications', JSON.stringify(game.verifications));
   },
 
   generateVerificationHash: function(str) {
@@ -585,9 +585,9 @@ var game = {
   exportProgress: function() {
     game.check();
     game.saveAnswer();
-    localStorage.setItem('level', game.level);
-    localStorage.setItem('answers', JSON.stringify(game.answers));
-    localStorage.setItem('solved', JSON.stringify(game.solved));
+    localStorage.setItem('flexbox_froggy_level', game.level);
+    localStorage.setItem('flexbox_froggy_answers', JSON.stringify(game.answers));
+    localStorage.setItem('flexbox_froggy_solved', JSON.stringify(game.solved));
 
     var solved = game.solved || [];
     var levelsExport = {};
